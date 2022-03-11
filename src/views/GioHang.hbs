@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>TrangChu/PhanHead}}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    table {
+        counter-reset: rowNumber;
+    }
+
+    table tbody tr {
+        counter-increment: rowNumber;
+    }
+
+    table tbody tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+    }
+</style>
+
+<body>
+    <!-- Navigation-->
+    {{>TrangChu/PhanTop}}
+    <!-- Header-->
+    {{>TrangChu/PhanDau}}
+    <!-- Section-->
+    <section class="py-5">
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h2>Giỏ Hàng</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <th>STT</th>
+                        <th>Tên Sách</th>
+                        <th>Đơn Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Thành Tiền</th>
+                    </thead>
+                    <tbody class="cart">
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        
+                        
+                        <td class="text-right">Thành Tiền: <button onClick="themHang()">Đặt Hàng</button><strong class="total"></strong></td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer-->
+    {{>TrangChu/PhanCuoi }}
+
+</body>
+
+</html>
