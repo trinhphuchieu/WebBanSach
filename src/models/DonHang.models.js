@@ -24,6 +24,20 @@ donHang.xemDonHang = (kq) => {
 }
 
 
+donHang.duyetDon = (ma_don_hang ,kq) => {
+
+    sql.query("UPDATE don_hang SET trang_thai_don = 1 WHERE ma_don_hang = ?",ma_don_hang,(err, res) => {
+        if (err) {
+            console.log("Lỗi: ", err);
+            kq(err, null);
+            return;
+        }
+        console.log("Duyệt đơn thành công: ", { ...res });
+        kq(null, { ...res });
+    });
+}
+
+
 donHang.xemDonChiTiet = (ma_don_hang, kq) => {
 
     sql.query("SELECT * FROM chi_tiet_don where ma_don_hang = ?", ma_don_hang, (err, res) => {

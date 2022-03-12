@@ -15,6 +15,7 @@ router.post('/dangky', trangChuController.dangKy);
 
 
 router.get('/', trangChuController.trangChu);
+router.get('/sach', trangChuController.trangHienThi);
 router.post('/', trangChuController.trangChu);
 
 module.exports = router;

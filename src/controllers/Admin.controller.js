@@ -137,9 +137,29 @@ class AdminController {
     }
 
 
+    duyetDon(req, res) {
+    
+        donHang.duyetDon(req.params.id+'', (err, ct) => {
+            if (err) {
+                return res.status(500).send({
+                    message:
+                        err.message || "Có Lỗi hiển thị đơn hàng"
+                });
+            }
+            
+            return res.status(200).send({ message: ct, code: 200 });
+        })
+    }
+
+
     //[GET] đơn chờ xử lý
     xemDonXuLy(req, res) {
         res.render('DonHangA');
+    }
+
+    //[GET] thống kê
+    thongKe(req, res) {
+        res.render('TrangThongKeA');
     }
 
 }

@@ -101,13 +101,13 @@
                                     <td>{{this.ma_don_hang}}</td>
                                     <td>{{this.tai_khoan}}</td>
                                     <td>{{this.tong_tien}} VNĐ</td>
-                                    <td>{{this.ngay_dat}}</td>
+                                    <td>{{chuyenGio this.ngay_dat}}</td>
                                     <td>{{this.ghi_chu}}</td>
                                     <td>{{tinhTrang this.trang_thai_don }}</td>
                                     <td><button class="btn btn-primary" data-toggle="modal"
                                             data-target=".bd-example-modal-lg" onclick="xemChiTietDon('{{json this}}')">
                                             Xem Đơn</button></td>
-                                    <td><button class="btn btn-danger"> Hủy Đơn</button></td>
+                                    <td><button class="btn btn-danger" onclick="huyDonHang('{{json this}}')"> Hủy Đơn</button></td>
                                 </tr>
                             </tbody>
                             {{/each}}

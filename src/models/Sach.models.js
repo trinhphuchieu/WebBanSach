@@ -1,3 +1,4 @@
+const { range } = require('express/lib/request');
 const sql = require('./db.js');
 
 
@@ -31,60 +32,60 @@ sach.hienThi = (kq) => {
             kq(err, null);
             return;
         }
-        kq(null,res);
+        kq(null, res);
     });
 }
 
-sach.xoa = (ma_sach,kq) =>{
-    sql.query("DELETE FROM sach WHERE ma_sach = ?",ma_sach,(err, res) =>{
+sach.xoa = (ma_sach, kq) => {
+    sql.query("DELETE FROM sach WHERE ma_sach = ?", ma_sach, (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);
             return;
-          }
-      
-          console.log(`Xóa thành công ${res.affectedRows} sách`);
-          kq(null, res);
+        }
+
+        console.log(`Xóa thành công ${res.affectedRows} sách`);
+        kq(null, res);
     })
 }
 
 
-sach.xemTheoId = (ma_sach,kq) =>{
-    sql.query("SELECT * FROM sach WHERE ma_sach = ?",ma_sach,(err, res) =>{
+sach.xemTheoId = (ma_sach, kq) => {
+    sql.query("SELECT * FROM sach WHERE ma_sach = ?", ma_sach, (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);
             return;
-          }
-          console.log("Kết quả lấy ra",res);
-          kq(null, res);
+        }
+        console.log("Kết quả lấy ra", res);
+        kq(null, res);
     })
 }
 
-sach.capNhatTheoID = (sach,kq) =>{
+sach.capNhatTheoID = (sach, kq) => {
 
     var arr = [];
     var truyVan = ""
-    if(sach.hinh_anh === undefined){
+    if (sach.hinh_anh === undefined) {
         truyVan = "UPDATE sach SET ten = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ? WHERE ma_sach = ?";
-        arr = [sach.ten,sach.the_loai,sach.tac_gia,sach.mo_ta,sach.gia_nien_yet,sach.gia_ban,sach.so_luong,sach.ma_sach];
-    }else {
+        arr = [sach.ten, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.ma_sach];
+    } else {
         truyVan = "UPDATE sach SET ten = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ?,hinh_anh = ? WHERE ma_sach = ?";
-        arr = [sach.ten,sach.the_loai,sach.tac_gia,sach.mo_ta,sach.gia_nien_yet,sach.gia_ban,sach.so_luong,sach.hinh_anh,sach.ma_sach];
+        arr = [sach.ten, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.hinh_anh, sach.ma_sach];
     }
-    sql.query(truyVan,arr,(err, res) =>{
+    sql.query(truyVan, arr, (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);
             return;
-          }
-          console.log("Kết quả cập nhật", res);
-          kq(null, res);
+        }
+        console.log("Kết quả cập nhật", res);
+        kq(null, res);
     })
 }
 
 
-sach.themDonHang = (donHang,kq) =>{
+sach.themDonHang = (donHang, kq) => {
 
     sql.query("INSERT INTO don_hang SET ?", donHang, (err, res) => {
         if (err) {
@@ -94,6 +95,53 @@ sach.themDonHang = (donHang,kq) =>{
         }
         console.log("Thêm đơn đặt hàng mới thành công: ", { ...donHang });
         kq(null, { ...donHang });
+    });
+}
+
+
+
+
+sach.hienThiTrang = (r, n, p, kq) => {
+    sql.query(`SELECT COUNT(*) as count FROM sach`, (err, res) => {
+        if (err) {
+            console.log("Lỗi lấy số sách", err);
+            return;
+        }
+
+        const tongTrang = Math.ceil(res[0].count / n);
+        if (p > tongTrang) {
+            p = tongTrang;
+        } else if (p < 0) {
+            p = 1;
+        }
+        var s = (p - 1) * n;
+
+
+        sql.query(`SELECT * FROM sach LIMIT ${s},${n}`, (err, res) => {
+            if (err) {
+                console.log("Lỗi lấy trang sách", err);
+                kq(err, null);
+                return;
+            }
+            var min = 0;
+            var max = 0;
+
+
+            if (parseInt(p) < Math.floor(r / 2)) {
+                min = 1;
+                max = r;
+            }
+            else if ((tongTrang - Math.floor(r / 2)) < p) {
+                max = tongTrang;
+                min = tongTrang - r;
+            } else {
+                min = p - Math.floor(r / 2);
+                max = parseInt(p) + Math.floor(r / 2);
+            }
+
+            kq(null, res, min === 0 ? 1 : min, max + 1);
+
+        });
     });
 }
 

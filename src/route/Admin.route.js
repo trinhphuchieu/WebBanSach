@@ -24,6 +24,7 @@ const router = express.Router();
 
 router.use(adminController.adminMiddleware);
 router.get('/sach/', adminController.quanLySach);
+router.get('/thongke/', adminController.thongKe);
 router.put('/sach/:id',upload.single('hinh_anh'),adminController.capNhatSach);
 router.get('/sach/:id', adminController.xemSach);
 router.delete('/sach/:id', adminController.xoaSach);
@@ -31,6 +32,7 @@ router.get('/themsach/', adminController.themSach);
 router.post('/themsach/', upload.single('hinh_anh'), adminController.themSach);
 router.get('/donhang/', adminController.xemDonHang);
 router.get('/donhang/:id', adminController.xemChiTietDon);
+router.post('/donhang/:id', adminController.duyetDon);
 router.get('/donxuly/', adminController.xemDonXuLy);
 router.get('/', adminController.admin);
 

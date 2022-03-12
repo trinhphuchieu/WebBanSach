@@ -33,7 +33,12 @@ app.engine('hbs', engine(
         partialsDir: path.join(__dirname, 'views', 'partials'),
         helpers: {
             json(i) {return JSON.stringify(i)},
-            tinhTrang(tt){return tt === 0 ? 'Chưa duyệt đơn':'Đã duyệt đơn';}
+            tinhTrang(tt){return tt === 0 ? 'Chưa duyệt đơn':'Đã duyệt đơn';},
+            chuyenGio(str){
+                str = new Date(str);
+                const a = ['Chủ nhật','Thứ hai','Thứ ba','Thứ tư','Thứ năm','Thứ sáu','Thứ bảy'];
+                return `${a[str.getDay()]}, ngày ${str.getDate()} tháng ${str.getMonth()} năm ${str.getFullYear()} Lúc ${str.getHours()}:${str.getMinutes()}:${str.getSeconds()} ${str.getHours() <= 12 ? 'sáng' : 'chiều'}`;
+              }
          },
     }
 ));

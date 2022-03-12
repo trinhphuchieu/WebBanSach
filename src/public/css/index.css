@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(to right, #4daf54,#2bd6c8);
+}
+/*================= menu ====================*/
+.header{
+    border: #2bd6c8 7px solid;
+    border-radius: 10px;
+    background-color: white;
+}
+.header_inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu{
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+.menu_link{
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 30px;
+}
+i{
+    padding: 10px;
+}
+.inputfind{
+    width: 300px;
+    margin-right: 5px;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+/*================= account ====================*/
+.row {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content:center;
+    
+}
+.account-page {
+    padding: 50px 0;
+  }
+  .form-container {
+    background: #fff;
+    width: 300px;
+    height: 400px;
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .form-container span {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #555;
+    cursor: pointer;
+    width: 100px;
+    display: inline-block;
+  }
+  .btn{
+      height: 30px;
+      background:#ff523b ;
+      color: white;
+      border-radius: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  .btn:hover{
+      border: 2px solid black;
+      background-color: white;
+      color: black;
+  }
+  .form-btn {
+    display: inline-block;
+  }
+  .form-container form {
+    max-width: 300px;
+    padding: 0 20px;
+    position: absolute;
+    top: 130px;
+    transition: transform 1s;
+  }
+  form input {
+    width: 100%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+  }
+  
+  form .btn {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+  
+  }
+  form .btn:focus {
+    outline: none;
+  }
+  
+  #LoginForm {
+    left: -300px;
+  }
+  #RegForm {
+    left: 0;
+  }
+  
+  form a {
+    font-size: 12px;
+  }
+  #indicator {
+    width: 100px;
+    border: none;
+    background: #ff523b;
+    height: 3px;
+    margin-top: 8px;
+    transform: translateX(100px);
+    transition: transform 1s;
+  }
+
+/*============footer=========*/
+
+.footer{
+  color: black;
+  width: 100%;
+  height: 200px;
+  background-color: white;
+  padding: 60px 0 20px;
+}
+.footer-row{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+li{
+  list-style: none;
+}

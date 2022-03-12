@@ -1,47 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{>TrangChu/PhanHead}}
-    <body>
-        <!-- Navigation-->
-        {{>TrangChu/PhanTop}}
-        <!-- Header-->
-        {{>TrangChu/PhanDau}}
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-             
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                       {{#each sach}}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="/uploads/{{this.hinh_anh}}" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{this.ten}}</h5>
-                                    <!-- Product price-->
-                                    {{this.gia_ban}} VNĐ
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-success mt-auto" onClick='themSP({{json this}})'>Mua Sách</a></div>
+{{>TrangChu/PhanHead}}
+
+<body>
+    <!-- Navigation-->
+    {{>TrangChu/PhanTop}}
+    <!-- Header-->
+    {{>TrangChu/PhanDau}}
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#each sach}}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="/uploads/{{this.hinh_anh}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{this.ten}}</h5>
+                                <!-- Product price-->
+                                {{this.gia_ban}} VNĐ
                             </div>
                         </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-success mt-auto"
+                                    onClick='themSP({{json this}})'>Mua Sách</a></div>
+                        </div>
                     </div>
-                {{/each}}
-                    
-           
-                    
-                    
                 </div>
+                {{/each}}
             </div>
-        </section>
-        
-        <!-- Footer-->
-       {{>TrangChu/PhanCuoi }}
+        </div>
+
        
-    </body>
+    </section>
+   
+        
+        {{!-- phân trang --}}
+     <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            
+                <script>
+                    const min = {{min}} ;
+                    const max = {{max}};
+                    console.log('min ',min);
+                    console.log('max ',max);                    
+                    var a = document.getElementsByClassName("pagination");
+                    a[0].innerHTML = `<li class="page-item"><a class="page-link" href="#">Trang Trước</a></li>`;
+                    for(var i = min ; i < max;i++){
+                       
+                        a[0].innerHTML += `<li class="page-item"><a class="page-link" href="/sach?p=${i}">${i}</a></li>`;
+                    }
+                    a[0].innerHTML += `<li class="page-item"><a class="page-link" href="#">Trang Sau</a></li>`;   
+                </script>
+            </ul>
+        </nav>
+        {{!-- phân trang --}}
+
+    <!-- Footer-->
+    {{>TrangChu/PhanCuoi }}
+
+</body>
+
 </html>
