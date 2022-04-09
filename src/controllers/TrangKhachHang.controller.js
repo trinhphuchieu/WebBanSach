@@ -70,6 +70,7 @@ class TrangKhachHang {
 
     }
 
+
     testDangKy(req, res) {
         if (req.session.tai_khoan === undefined) return res.send({ message: 'vui long dang nhap', code: 500 });
         return res.send({ message: req.session.tai_khoan, code: 500 });

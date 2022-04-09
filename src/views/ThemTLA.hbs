@@ -55,75 +55,29 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Thêm Sách Mới</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Thêm Thể Loại Mới</h1>
 
                         </div>
 
                         <!-- Content Row -->
 
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST">
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Mã Sách</label>
-                                <input type="text" name="ma_sach" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                <label for="exampleFormControlInput1">Mã Thể Loại</label>
+                                <input type="text" name="ma_the_loai" class="form-control" id="exampleFormControlInput1" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Tên Sách</label>
-                                <input type="text" name="ten_sach" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                <label for="exampleFormControlInput1">Tên Thể Loại</label>
+                                <input type="text" name="ten_the_loai" class="form-control" id="exampleFormControlInput1" placeholder="">
                             </div>
 
-<div class="form-group">
-                            <label for="inputState">Thể Loại</label>
-                           
-                            <select id="inputState" name="the_loai" class="form-control">
-                                <option value="..." selected>...</option>
-                                 {{#each tl}}
-                                <option value="{{this.ma_the_loai}}">{{this.ten_the_loai}}</option>
-                                {{/each}}
-                            </select>
-
-                         
-</div>
-<div class="form-group">
-                            <label for="inputState">Nhà Xuất Bản</label>
-                           
-                            <select id="inputState" name="nxb" class="form-control">
-                                <option value="..." selected>...</option>
-                                 {{#each nxb}}
-                                <option value="{{this.ma_nxb}}">{{this.ten_nxb}}</option>
-                                {{/each}}
-                            </select>
-                            
-                         
-</div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Tác Giả</label>
-                                <input type="text" name="tac_gia" class="form-control" id="exampleFormControlInput1" placeholder="">
-                            </div>
-
+                        
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Mô Tả</label>
                                 <textarea type="text" name="mo_ta" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Số Lượng</label>
-                                <input type="number" name="so_luong" class="form-control" ></input>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Giá Niêm Yết</label>
-                                <input type="number" name="gia_nien_yet" class="form-control" ></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Giá Bán</label>
-                                <input type="number" name="gia_ban" class="form-control" ></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlFile1">Hình Ảnh</label>
-                                <input type="file"  name="hinh_anh" accept="image/png, image/jpeg, image/jpg" class="form-control-file" id="imgFile">
-                                <img id="prevView"  style="height:300px ; width:200px; " src="#" alt="your image" />
-                            </div>
+                            
                             <button type="submit" class="btn btn-primary">Thêm</button>
 
                         </form>

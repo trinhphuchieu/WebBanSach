@@ -20,8 +20,6 @@ function renderHoaDon(chiTiet, donHang) {
     var s = document.getElementsByClassName('modal-content');
     if (s === null) return;
 
-
-
     s[0].innerHTML = `<div class="card">
     <div class="card-header">
         Ngày đặt :
@@ -36,11 +34,16 @@ function renderHoaDon(chiTiet, donHang) {
             <div class="col">
                 <strong style="color:red;text-align:center;">HÓA ĐƠN ĐIỆN TỬ</strong>
                 <br>
-                <strong>Mã Đơn Hàng: </strong><span id="ma-don"></span></span>
+                <strong>Mã Đơn Hàng: </strong><span id="ma-don"></span>
+                <br>
+                <strong>Tên người nhận: </strong><span id="ten"></span>
+                <br>
+                <strong>Số điện thoại: </strong><span id="sdt"></span>
+                <br>
+                <strong>Địa chỉ: </strong><span id="dc"></span>
                 <br>
                 <strong>Ngày đặt hàng: </strong><span id="ngay-dat"></span></span>
-                 <div id="ten">Madalinskiego 8</div>
-                 <span> <strong>Tài Khoản: </strong><span id="tai-khoan"></span></span>
+            
             </div>
 
         </div>
@@ -77,46 +80,52 @@ function renderHoaDon(chiTiet, donHang) {
                 </tfoot>
                 
             </table>
-            <div class="align-items-center"><button class="btn btn-primary" onClick ="duyetDon()"> Duyệt Đơn Hàng</button></div>
+            <div  id="btnDuyet" class="align-items-center"></div>
         </div>
     </div>
 </div>`
+
+    var btnDuyet = document.getElementById('btnDuyet');
+    var ma_don = document.getElementById('ma-don');
     var ten = document.getElementById('ten');
-    var tai_khoan = document.getElementById('tai-khoan');
+    var sdt = document.getElementById('sdt');
+    var dc = document.getElementById('dc');
     var trang_thai = document.getElementById('trang-thai');
     var ngay_dat = document.getElementById('ngay-dat');
-
-    var ma_don = document.getElementById('ma-don');
     ngay_dat.innerHTML = chuyenGio(new Date(donHang.ngay_dat));
-    console.log(chuyenGio(new Date(donHang.ngay_dat)));
-  
-    
-    ma_don.innerHTML = donHang.ma_don_hang;
-    tai_khoan.innerHTML = donHang.tai_khoan;
-    trang_thai.innerHTML = donHang.trang_thai_don === 0 ? 'Chưa Duyệt': 'Đang Xử Lý';
+    ma_don.innerHTML= donHang.ma_don_hang;
+    ten.innerHTML = donHang.ten_nn;
+    sdt.innerHTML = donHang.sdt;
+    dc.innerHTML = donHang.dia_chi;
+
+    if(donHang.trang_thai_don === 0){
+        btnDuyet.innerHTML = `<button class="btn btn-primary" onClick ="duyetDon()"> Xử Lý Đơn</button>`;
+    }else if(donHang.trang_thai_don === 1){
+        btnDuyet.innerHTML = `<button class="btn btn-primary" onClick ="duyetDon()"> Đã Xử Lý</button>`;
+    }
+    trang_thai.innerHTML = donHang.trang_thai_don === 0 ? 'Chưa Duyệt' : (donHang.trang_thai_don === 1 ? 'Đang Xử Lý' : 'Đã Giao');
     var s = document.getElementsByClassName('tt-donHang');
     var tien = document.getElementById('tong-tien');
-    tien.innerHTML = donHang.tong_tien +' VNĐ';
+    tien.innerHTML = number_format(donHang.tong_thanh_toan) + ' VNĐ';
     var c = 1;
-    for(var i in chiTiet){
-        if(!chiTiet.hasOwnProperty(i)) continue;
+    for(var i in chiTiet) {
+        if (!chiTiet.hasOwnProperty(i)) continue;
         s[0].innerHTML += `<tr>
         <td>${c}</td>
-        <td>${chiTiet[i].ten}</td>
+        <td>${chiTiet[i].ten_sach}</td>
         <td>${chiTiet[i].so_luong}</td>
-        <td>${chiTiet[i].don_gia}</td>
-        <td>${chiTiet[i].thanh_tien}</td>
+        <td>${number_format(chiTiet[i].don_gia)}</td>
+        <td>${number_format(chiTiet[i].thanh_tien)}</td>
         </tr>`;
         c++;
     }
-
 }
 
 function chuyenGio(str) {
-    const a = ['Chủ nhật','Thứ hai','Thứ ba','Thứ tư','Thứ năm','Thứ sáu','Thứ bảy'];
+    const a = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
     return `${a[str.getDay()]}, ngày ${str.getDate()} tháng ${str.getMonth()} năm ${str.getFullYear()} Lúc ${str.getHours()}:${str.getMinutes()}:${str.getSeconds()} ${str.getHours() <= 12 ? 'sáng' : 'chiều'}`;
-  }
-function duyetDon(duyetDon){
+}
+function duyetDon(duyetDon) {
     var ma_don = document.getElementById('ma-don');
     $.ajax({
         type: "POST",
@@ -135,7 +144,7 @@ function duyetDon(duyetDon){
 }
 
 
-function huyDonHang(donHang){
+function huyDonHang(donHang) {
     donHang = JSON.parse(donHang);
     $.ajax({
         type: "DELETE",
@@ -150,4 +159,30 @@ function huyDonHang(donHang){
             alert('error');
         }
     });
+}
+
+
+function number_format(number, decimals, dec_point, thousands_sep) {
+    // *     example: number_format(1234.56, 2, ',', ' ');
+    // *     return: '1 234,56'
+    number = (number + '').replace(',', '').replace(' ', '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
 }

@@ -40,4 +40,18 @@ dangNhap.layTaiKhoan = (tai_khoan,kq) =>{
     }); 
 }
 
+dangNhap.CapNhatTaiKhoan = (tai_khoan,thongTin,kq) =>{
+
+    sql.query("UPDATE khach_hang SET ? WHERE tai_khoan = ?",thongTin, tai_khoan, (err, res) => {
+        if (err) {
+            console.log("Lỗi cập nhật tài khoản: ", err);
+            kq(err, null);
+            return;
+        }
+        console.log("Thông tin sau cập nhật: ", { ...res });
+        kq(null, { ...res });
+    }); 
+}
+
+
 module.exports = dangNhap;

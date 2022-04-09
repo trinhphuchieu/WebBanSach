@@ -2,7 +2,6 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
   // *     return: '1 234,56'
@@ -27,19 +26,29 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-if(soLuong_DonHang === undefined) soLuong_DonHang = [];
-// Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
+
+if(soLuong_TaiKhoan === undefined) soLuong_TaiKhoan = [0]; 
+// Area Chart Example
+var ctx = document.getElementById("myAccountChart");
+var s = document.getElementById('s');
+s.innerHTML = number_format(doanhThuThang) + "VNĐ";
+var myLineChart = new Chart(ctx, {
+  type: 'line',
+  fill: false,
   data: {
     labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
     datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: soLuong_DonHang
+      label: "Earnings",
+      lineTension: 0.1,
+      backgroundColor: "rgba(78, 115, 223, 0.05)",
+      borderColor: "rgba(78, 115, 223, 1)",
+      pointRadius: 3,
+      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverRadius: 3,
+      pointHitRadius: 10,
+      pointBorderWidth: 2,
+      data: soLuong_TaiKhoan
     }],
   },
   options: {
@@ -55,58 +64,52 @@ var myBarChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'date'
         },
         gridLines: {
           display: false,
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 12
-        },
-        maxBarThickness: 25,
+          maxTicksLimit: 7
+        }
       }],
       yAxes: [{
         ticks: {
-          min: 0,
-          max: 300,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return  number_format(value)+' Đơn Hàng';
+            return number_format(value) +' Đăng Ký';
           }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
         }
+       
       }],
     },
     legend: {
       display: false
     },
+    tension: 0.1,
     tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
       titleMarginBottom: 10,
       titleFontColor: '#6e707e',
       titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
       borderColor: '#dddfeb',
       borderWidth: 1,
       xPadding: 15,
       yPadding: 15,
       displayColors: false,
+      intersect: false,
+      mode: 'index',
       caretPadding: 10,
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return  number_format(tooltipItem.yLabel) +' Đơn Hàng';
+          return  number_format(tooltipItem.yLabel)+ ' Đăng Ký';
         }
       }
-    },
+    }
   }
 });

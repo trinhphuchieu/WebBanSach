@@ -11,7 +11,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
     s = '',
-    toFixedFix = function(n, prec) {
+    toFixedFix = function (n, prec) {
       var k = Math.pow(10, prec);
       return '' + Math.round(n * k) / k;
     };
@@ -26,13 +26,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-
+const month = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
+var myChartDoanhThu = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: month,
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: doanhThu_BanSach
     }],
   },
   options: {
@@ -69,7 +69,7 @@ var myLineChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 33
         }
       }],
       yAxes: [{
@@ -77,8 +77,8 @@ var myLineChart = new Chart(ctx, {
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
+          callback: function (value, index, values) {
+            return number_format(value) + ' VNĐ';
           }
         },
         gridLines: {
@@ -108,11 +108,98 @@ var myLineChart = new Chart(ctx, {
       mode: 'index',
       caretPadding: 10,
       callbacks: {
-        label: function(tooltipItem, chart) {
+        label: function (tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return 'Doanh Thu : ' + number_format(tooltipItem.yLabel) + ' VNĐ';
         }
       }
     }
   }
 });
+
+function guiThang(i) {
+  myChartDoanhThu.data.labels =[];
+  myChartDoanhThu.data.datasets[0].data =[];
+  if (i === 0) 
+  {
+    tenThang.innerHTML = 'Năm 2022';
+    layDoanhThuNam();
+  }
+  else {
+    tenThang.innerHTML = 'Tháng ' + i;
+    layDoanhThuThang(i);
+  }
+  myChartDoanhThu.update();
+
+}
+function layDoanhThuNam(){
+  myChartDoanhThu.data.labels = month;
+  myChartDoanhThu.data.datasets[0].data = doanhThu_BanSach;
+ 
+}
+
+
+
+
+
+function layDoanhThuThang(i) {
+  
+  const ngayThang = layNgayTrongThang(i-1,2022);
+  ngayThang.forEach((ngay) => {
+    myChartDoanhThu.data.labels.push(`${ngay}/${i}`);
+  });
+
+
+  $.ajax({
+    type: "GET",
+    url: "/admin/thang/"+i,
+    contentType: 'application/json',
+    success: function (res) {
+      
+      if (res.code === 200) {
+        
+        if(Object.keys(res.message).length === 0){
+          return alert("Chưa có dữ liệu doanh thu trong tháng");
+        }
+        myChartDoanhThu.data.datasets[0].data = dataDT(res.message);
+        myChartDoanhThu.update();
+      }
+    },
+    error: function (result) {
+      alert('Có lỗi trong quá trình thực thi lấy dữ liệu');
+    }
+  });
+
+}
+
+function dataDT(dataDoanhThu) {
+  let c = 0;
+  const len = Object.keys(dataDoanhThu).length - 1;
+  const NGAYCUOI = dataDoanhThu[len].NGAY;
+  let doanhThu_BanSach = [];
+  for (var i = 1; i <= NGAYCUOI; i++) {
+      if (dataDoanhThu[c].NGAY === i) {
+          doanhThu_BanSach.push(dataDoanhThu[c].DOANHTHU);
+          c++;
+          continue;
+      }
+      doanhThu_BanSach.push(0);
+  }
+  
+  return doanhThu_BanSach;
+}
+
+function layNgayTrongThang(m, y) {
+  var date = new Date(y, m, 1);
+  var ngay = [];
+  while (date.getMonth() === m) {
+    ngay.push(new Date(date).getDate());
+    date.setDate(date.getDate() + 1);
+  }
+  return ngay;
+}
+
+
+
+
+

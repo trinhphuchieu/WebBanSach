@@ -64,7 +64,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">QUẢN LÝ SÁCH</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">QUẢN LÝ ĐƠN ĐẶT HÀNG</h6>
                         </div>
 
 
@@ -80,8 +80,9 @@
                             </div>
                         </div>
                         {{!-- ---------------------- --}}
-
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+<div class="card-body">
+                            <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Mã Đơn Hàng</th>
@@ -90,17 +91,19 @@
                                     <th>Ngày Đặt</th>
                                     <th>Ghi Chú</th>
                                     <th>Trạng Thái Đơn</th>
-
+                                    <th></th>
+                                    <th></th>
                                 </tr>
 
 
                             </thead>
-                            {{#each donHang}}
+                         
                             <tbody>
+                                   {{#each donHang}}
                                 <tr>
                                     <td>{{this.ma_don_hang}}</td>
                                     <td>{{this.tai_khoan}}</td>
-                                    <td>{{this.tong_tien}} VNĐ</td>
+                                    <td>{{number_format this.tong_thanh_toan}} VNĐ</td>
                                     <td>{{chuyenGio this.ngay_dat}}</td>
                                     <td>{{this.ghi_chu}}</td>
                                     <td>{{tinhTrang this.trang_thai_don }}</td>
@@ -109,12 +112,15 @@
                                             Xem Đơn</button></td>
                                     <td><button class="btn btn-danger" onclick="huyDonHang('{{json this}}')"> Hủy Đơn</button></td>
                                 </tr>
+                                  {{/each}}
                             </tbody>
-                            {{/each}}
+                          
                             <tfoot>
 
                             </tfoot>
                         </table>
+                        </div>
+                        </div>
 
 
                     </div>

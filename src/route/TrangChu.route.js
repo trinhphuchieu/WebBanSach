@@ -12,7 +12,7 @@ router.post('/dangnhap', trangChuController.kiemTraDangNhap);
 router.use('/dangky', trangChuController.testDangKy);
 router.get('/dangky', trangChuController.dangKy);
 router.post('/dangky', trangChuController.dangKy);
-
+router.get('/dangxuat', trangChuController.dangXuat);
 
 router.get('/', trangChuController.trangChu);
 router.get('/sach', trangChuController.trangHienThi);

@@ -43,14 +43,55 @@
 <div class="header">
     <div class="header_inner">
         <div class="logo">
-            <img src="/image/logoshopbook.PNG" alt="">
+            <a href="/"><img src="/image/logoshopbook.PNG" alt=""></a>
         </div>
         <ul class="menu">
             <li class="menu_item"><input type="text" class="inputfind" placeholder="Tìm kiếm ..."><i
                     class="fa-solid fa-magnifying-glass"></i></li>
-            <li class="menu_item"><a href="" class="menu_link">Trang Chủ<i class="fa-solid fa-house"></i></a></li>
-            <li class="menu_item"><a href="" class="menu_link">Giỏ Hàng<i class="fa-solid fa-cart-arrow-down"></i></a></li>
-            <li class="menu_item"><a href="" class="menu_link">Đăng Nhập<i class="fa-solid fa-circle-user"></i></a></li>
+            <li class="menu_item"><a href="/" class="menu_link">Trang Chủ<i class="fa-solid fa-house"></i></a></li>
+            <li class="menu_item"><a href="/giohang" class="menu_link">Giỏ Hàng<i
+                        class="fa-solid fa-cart-arrow-down"></i></a>
+            </li>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    HHK
+                    <img src="" alt="">
+        
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+            <script>
+                let clickli = document.querySelector("#clickli")
+                clickli.onclick = function (e) {
+                    preventDefault()
+                    var s = document.getElementById("infoUser");
+
+                    s.innerHTML = `  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                 </div>`
+
+                }
+                var tk = "{{tai_khoan}}";
+                if (tk !== "") {
+                    console.log('Login thành công');
+                    var s = document.getElementById("infoUser");
+
+                    s.innerHTML = `  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                 </div>`
+                }
+            </script>
+
         </ul>
     </div>
 </div>

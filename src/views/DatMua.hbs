@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>TrangChu/PhanHead}}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    table {
+        counter-reset: rowNumber;
+    }
+
+    table tbody tr {
+        counter-increment: rowNumber;
+    }
+
+    table tbody tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+    }
+</style>
+
+<body>
+    <!-- Navigation-->
+    {{>TrangChu/PhanTop}}
+    <!-- Header-->
+    {{>TrangChu/PhanDau}}
+    <!-- Section-->
+    <section class="py-5">
+
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h2>Giỏ Hàng</h2>
+            </div>
+
+            <table>
+                <div class="card-body">
+                    <tr>
+                        <td>Tên Người Nhận</td>
+                        <td>SĐT</td>
+                        <td>Địa Chỉ</td>
+                    </tr>
+                    {{#tai_khoan}}
+                    <tr>
+                        <td id="name">{{this.ho_ten}}</td>
+                        <td id="phone">{{this.sdt}}</td>
+                        <td id="address">{{this.dia_chi}}</td>
+                    {{/tai_khoan}}
+                        <td><button onClick="diaChiGiaoHang()" data-toggle="modal" data-target="#myModal">Thay
+                                Đổi</button></td>
+                    </tr>
+                    
+            </table>
+
+
+            <!-- Modal -->
+            <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog"
+                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN GIAO HÀNG</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="myLargeModalLabel">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tên người nhận</label>
+                                    <input type="text" class="form-control" id="name1"
+                                        aria-describedby="emailHelp">
+                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input type="number" class="form-control" id="phone1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Địa Chỉ</label>
+                                    <input type="text" class="form-control" id="add1">
+                                </div>
+                               
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary" onclick="thayDoiDiaChiDon()">Lưu thông tin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <th>STT</th>
+                    <th>Tên Sách</th>
+                    <th>Đơn Giá</th>
+                    <th>Số Lượng</th>
+                    <th>Thành Tiền</th>
+                </thead>
+                <tbody class="cart1">
+                </tbody>
+                <tfoot>
+
+                    <td class="text-right">Thành Tiền: <button onClick="themHang()">Mua Hàng</button><strong
+                            class="total"></strong></td>
+
+                </tfoot>
+
+
+
+
+            </table>
+        </div>
+        </div>
+
+    </section>
+
+    <!-- Footer-->
+    {{>TrangChu/PhanCuoi }}
+
+</body>
+
+</html>

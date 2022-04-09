@@ -69,6 +69,15 @@ class TrangChuControllers {
         return res.render('TrangChu');
 
     }
+    
+    dangXuat(req, res) {
+        
+        req.session.destroy(function(err) {
+            return res.redirect(req.baseUrl);
+         })
+        
+    }
+
 
     testDangKy(req, res) {
         if (req.session.tai_khoan === undefined) return res.send({ message: 'vui long dang nhap', code: 500 });

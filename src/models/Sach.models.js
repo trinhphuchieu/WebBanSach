@@ -5,8 +5,9 @@ const sql = require('./db.js');
 const sach = function (book) {
     this.ma_sach = sach.ma_sach,
         this.the_loai = sach.the_loai,
-        this.ten = sach.ten,
+        this.ten_sach = sach.ten_sach,
         this.tac_gia = sach.tac_gia,
+        this.nxb = sach.nxb,
         this.hinh_anh = sach.hinh_anh,
         this.gia_ban = sach.gia_ban,
         this.mo_ta = sach.mo_ta,
@@ -26,13 +27,45 @@ sach.tao = (sachMoi, kq) => {
     });
 };
 sach.hienThi = (kq) => {
-    sql.query("SELECT * FROM sach", (err, res) => {
+    sql.query("SELECT *,(SELECT ten_the_loai FROM the_loai WHERE ma_the_loai = the_loai) AS ten_TL,(SELECT ten_nxb FROM nha_xuat_ban WHERE ma_nxb = nxb) AS ten_NXB FROM sach ", (err, res) => {
         if (err) {
             console.log("Lỗi", err);
             kq(err, null);
             return;
         }
         kq(null, res);
+    });
+}
+
+
+sach.layTLVaNXB = (kq) => {
+    sql.query("SELECT * FROM the_loai;SELECT * FROM nha_xuat_ban", (err, res) => {
+        if (err) {
+            console.log("Lỗi", err);
+            kq(err, null);
+            return;
+        }
+        kq(null, res);
+    });
+}
+
+
+sach.layTLVaNXB1 = (kq) => {
+    sql.query("SELECT * FROM the_loai;SELECT * FROM nha_xuat_ban", (err, res) => {
+        if (err) {
+            console.log("Lỗi", err);
+            kq(err, null);
+            return;
+        }
+        var theLoai = {};
+        var nxb = {};
+        res[0].forEach((i)=>{
+            theLoai[i.ma_the_loai]=i.ten_the_loai;
+        })
+        res[1].forEach((i)=>{
+            nxb[i.ma_nxb]=i.ten_nxb;
+        })
+        kq(null, [theLoai,nxb]);
     });
 }
 
@@ -67,11 +100,11 @@ sach.capNhatTheoID = (sach, kq) => {
     var arr = [];
     var truyVan = ""
     if (sach.hinh_anh === undefined) {
-        truyVan = "UPDATE sach SET ten = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ? WHERE ma_sach = ?";
-        arr = [sach.ten, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.ma_sach];
+        truyVan = "UPDATE sach SET ten_sach = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ? WHERE ma_sach = ?";
+        arr = [sach.ten_sach, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.ma_sach];
     } else {
-        truyVan = "UPDATE sach SET ten = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ?,hinh_anh = ? WHERE ma_sach = ?";
-        arr = [sach.ten, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.hinh_anh, sach.ma_sach];
+        truyVan = "UPDATE sach SET ten_sach = ?,the_loai = ?,tac_gia = ?,mo_ta = ?,gia_nien_yet = ?,gia_ban = ?,so_luong = ?,hinh_anh = ? WHERE ma_sach = ?";
+        arr = [sach.ten_sach, sach.the_loai, sach.tac_gia, sach.mo_ta, sach.gia_nien_yet, sach.gia_ban, sach.so_luong, sach.hinh_anh, sach.ma_sach];
     }
     sql.query(truyVan, arr, (err, res) => {
         if (err) {

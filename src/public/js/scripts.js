@@ -1,4 +1,5 @@
 function renderHang(sp) {
+    console.log('dat hang' , cartLS.list());
     const sach = document.querySelector('.cart');
     const tongTien = document.querySelector('.total');
     if (sach === null) return;
@@ -6,19 +7,19 @@ function renderHang(sp) {
     sach.innerHTML = sp.map((sp1) => `<tr>
                         
                         <td></td> 
-						<td>${sp1.name['ten']}</td>
+						<td>${sp1.name['ten_sach']}</td>
 
 						<td class="text-right">${sp1.price}</td>
                         <td >
                          <div class="w3-show-inline-block">
                              <div class="w3-bar">
 							<button type="button"class="w3-btn w3-teal"
-								onClick="cartLS.quantity('${sp1.id}',1)">+</button>
+								onClick="cartLS.quantity(${sp1.id},1)">+</button>
 						
                                 <div  class="w3-btn w3-border">${sp1.quantity}</div>
 						
 							<button type="button" class="w3-btn w3-teal"
-								onClick="decV('${sp1.id}')">-</button>
+								onClick="decV(${sp1.id})">-</button>
                                 </div>
 						 </div>
                         </td>
@@ -30,6 +31,33 @@ function renderHang(sp) {
     tongTien.innerHTML = cartLS.total();
     cartLS.onChange(renderHang);
 }
+
+
+
+function renderSP(sp) {
+    console.log('dat mua' , cartLS.list());
+    const sach = document.querySelector('.cart1');
+    const tongTien = document.querySelector('.total');
+    if (sach === null) return;
+    const i = 1;
+    sach.innerHTML = sp.map((sp1) => `<tr>
+                        
+                        <td></td> 
+						<td>${sp1.name['ten_sach']}</td>
+						<td class="text-right">${sp1.price}</td>
+                        <td > ${sp1.quantity}</td>
+						<td>${sp1.price * sp1.quantity}</td>
+					</tr>`
+    ).join("");
+
+    tongTien.innerHTML = cartLS.total();
+    cartLS.onChange(renderSP);
+}
+
+
+
+renderSP(cartLS.list());
+
 
 renderHang(cartLS.list());
 function chuyenTrang() {
@@ -84,6 +112,31 @@ function themSP(sach) {
         }
     });
 }
+
+
+const name = document.getElementById('name');
+const address = document.getElementById('address');
+const phone = document.getElementById('phone');
+const name1 = document.getElementById('name1'); 
+const address1 = document.getElementById('add1');
+const phone1 = document.getElementById('phone1');
+
+
+
+function diaChiGiaoHang(){
+    name1.value = name.innerHTML;
+    address1.value = address.innerHTML;
+    phone1.value = phone.innerHTML;
+}
+
+function thayDoiDiaChiDon(){
+    name.innerHTML = name1.value;
+    address.innerHTML = address1.value;
+    phone.innerHTML = phone1.value;
+ 
+
+}
+
 
 
 
