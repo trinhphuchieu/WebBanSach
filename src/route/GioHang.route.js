@@ -4,7 +4,8 @@ const router = express.Router();
 
 router.use(giohangController.kiemTraTaiKhoan);
 router.get('/muahang',giohangController.dsMuaHang);
-router.get('/',giohangController.dsGioHang);
 router.post('/',giohangController.dsHangMua);
+router.get('/',giohangController.dsGioHang);
+
 
 module.exports = router

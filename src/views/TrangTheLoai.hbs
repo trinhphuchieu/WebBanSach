@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+{{> TrangChu/PhanHeadKH}}
+<body>
+   
+
+
+
+   {{> TrangChu/PhanDau}}
+
+   
+    <link rel="stylesheet" href="/css/bat-len.css">
+
+    <!-- thanh "danh muc sach" đã được ẩn bên trong + hotline + ho tro truc tuyen -->
+    {{> TrangChu/MenuBar}}
+    
+
+    <!-- breadcrumb  -->
+    <section class="breadcrumbbar">
+        <div class="container">
+            <ol class="breadcrumb mb-0 p-0 bg-transparent">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active"><a href="sach-moi-tuyen-chon.html">Sách</a></li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ảnh banner -->
+    <section class="banner">
+        <div class="container">
+            <a href="sach-moi-tuyen-chon.html"><img src="/image/banner.jpg" alt="sach-moi-full-banner"
+                    class="img-fluid"></a>
+        </div>
+    </section>
+
+    <!-- các sản phẩm  -->
+    <section class="content my-4" >
+        <div class="container">
+            <div class="noidung bg-white" style=" width: 100%; background-color:#F8F9FA;">
+                <div class="items" style="background-color:#F8F9FA;">
+                    <div class="row" >
+                         {{#each sach}}
+                        <div class="col-lg-3 col-md-4 col-xs-6" style="background-color:#F8F9FA; padding:0;padding:0px 0px 15px 0px ;">
+
+                            <!-- 1 sản phẩm  -->
+                           
+                            <div class="card">
+                                <a href="/{{this.ma_sach}}" class="motsanpham"
+                                    style="text-decoration: none; color: black;" data-toggle="tooltip"
+                                    data-placement="bottom" title="{{this.ten_sach}}">
+                                    <img class="card-img-top anh" src="/uploads/{{this.hinh_anh}}" alt="{{this.ten_sach}}">
+                                    <div class="card-body noidungsp mt-3">
+                                        <h3 class="card-title ten" ">{{this.ten_sach}}</h3>
+                                        <small class="tacgia text-muted">{{this.tac_gia}}</small>
+                                        <div class="gia d-flex align-items-baseline">
+                                            <div class="giamoi">{{number_format this.gia_ban}} đ</div>
+                                            
+                                        </div>
+                                        <div class="danhgia" >
+                                            <ul class="d-flex" style="list-style: none;">
+                                                <li class="active"><i class="fa fa-star"></i></li>
+                                                <li class="active"><i class="fa fa-star"></i></li>
+                                                <li class="active"><i class="fa fa-star"></i></li>
+                                                <li class="active"><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <span class="text-muted">0 nhận xét</span>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                          
+                        </div>
+                          {{/each}}
+            
+                </div>
+
+
+  
+        {{!-- phân trang --}}
+                <!-- pagination bar  -->
+                <div class="pagination-bar my-3"  >
+                    <div class="row" style="background-color:#F8F9FA;">
+                        <div class="col-12">
+                            {{!-- phân trang --}}
+     <nav aria-label="Page navigation example " >
+            <ul class="pagination justify-content-center">
+            
+                <script>
+                    const min = {{min}} ;
+                    const max = {{max}};
+                    const trang = {{trang}};
+                    const mtl = `{{ma_the_loai}}`;
+                    console.log('min ',min);
+                    console.log('max ',max);                    
+                    var a = document.getElementsByClassName("pagination");
+                    a[0].innerHTML += `<li class="page-item"><a class="page-link" href="/theloai?tl=${mtl}&p=${min - 1 <= 0? 1: min - 1}">Trang Trước</a></li>`;
+                    
+                    for(var i = min; i < max;i++){
+                        if(i===trang){
+                            a[0].innerHTML += `<li class="page-item active"><a class="page-link" href="/theloai?tl=${mtl}&p=${trang}">${trang}</a></li>`;
+                            continue;
+                        }
+                        a[0].innerHTML += `<li class="page-item"><a class="page-link" href="/theloai?tl=${mtl}&p=${i}">${i}</a></li>`;
+                    }
+                    a[0].innerHTML += `<li class="page-item"><a class="page-link" href="/theloai?tl=${mtl}&p=${trang + 1 >= max? trang: trang+1}">Trang Sau</a></li>`;   
+                </script>
+            </ul>
+        </nav>
+        
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!--het khoi san pham-->
+            </div>
+            <!--het div noidung-->
+        </div>
+        <!--het container-->
+    </section>
+
+
+   {{> TrangChu/PhanCuoi}}
+
+    <!-- nut cuon len dau trang -->
+    <div class="fixed-bottom">
+        <div class="btn btn-warning float-right rounded-circle nutcuonlen" id="backtotop" href="#"
+            style="background:#CF111A; margin:30px;"><i class="fa fa-chevron-up text-white"></i></div>
+    </div>
+
+
+</body>
+
+</html>

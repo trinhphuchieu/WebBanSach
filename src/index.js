@@ -41,7 +41,7 @@ app.engine('hbs', engine(
             chuyenGio(str) {
                 str = new Date(str);
                 const a = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
-                return `${a[str.getDay()]}, ngày ${str.getDate()} tháng ${str.getMonth()} năm ${str.getFullYear()} Lúc ${str.getHours()}:${str.getMinutes()}:${str.getSeconds()} ${str.getHours() <= 12 ? 'sáng' : 'chiều'}`;
+                return `${a[str.getDay()]}, ngày ${str.getDate()} tháng ${str.getMonth()+1} năm ${str.getFullYear()} Lúc ${str.getHours()}:${str.getMinutes()}:${str.getSeconds()} ${str.getHours() <= 12 ? 'sáng' : 'chiều'}`;
             },
             array(dataDoanhThu) {
 
@@ -68,7 +68,10 @@ app.engine('hbs', engine(
 
                 return a;
             },
-
+            ktTT(check){
+                if(parseInt(check)===0) return '';
+                return 0;
+            },
 
             number_format(number, decimals, dec_point, thousands_sep) {
                 number = (number + '').replace(',', '').replace(' ', '');

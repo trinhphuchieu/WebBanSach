@@ -38,6 +38,19 @@ sach.hienThi = (kq) => {
 }
 
 
+
+sach.hienThi2 = (kq) => {
+    sql.query("SELECT *,(SELECT ten_the_loai FROM the_loai WHERE ma_the_loai = the_loai) AS ten_TL,(SELECT ten_nxb FROM nha_xuat_ban WHERE ma_nxb = nxb) AS ten_NXB FROM sach limit 10", (err, res) => {
+        if (err) {
+            console.log("Lỗi", err);
+            kq(err, null);
+            return;
+        }
+        kq(null, res);
+    });
+}
+
+
 sach.layTLVaNXB = (kq) => {
     sql.query("SELECT * FROM the_loai;SELECT * FROM nha_xuat_ban", (err, res) => {
         if (err) {
@@ -84,7 +97,7 @@ sach.xoa = (ma_sach, kq) => {
 
 
 sach.xemTheoId = (ma_sach, kq) => {
-    sql.query("SELECT * FROM sach WHERE ma_sach = ?", ma_sach, (err, res) => {
+    sql.query("SELECT *,(SELECT ten_the_loai FROM the_loai WHERE ma_the_loai = the_loai) AS ten_TL,(SELECT ten_nxb FROM nha_xuat_ban WHERE ma_nxb = nxb) AS ten_NXB FROM sach WHERE ma_sach = ?", ma_sach, (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);
@@ -140,7 +153,7 @@ sach.hienThiTrang = (r, n, p, kq) => {
             console.log("Lỗi lấy số sách", err);
             return;
         }
-
+        const tong = res[0].count;
         const tongTrang = Math.ceil(res[0].count / n);
         if (p > tongTrang) {
             p = tongTrang;
@@ -158,11 +171,68 @@ sach.hienThiTrang = (r, n, p, kq) => {
             }
             var min = 0;
             var max = 0;
-
-
+            
             if (parseInt(p) < Math.floor(r / 2)) {
-                min = 1;
-                max = r;
+              
+                min = 1;        
+                if((parseInt(p)*n)/(tong) < 1){
+                    max = r;
+                }else{
+                    max = parseInt(p);
+                }  
+            }
+            // if (parseInt(p) < Math.floor(r / 2)) {
+            //     min = 1;
+            //     max = r;
+            // }
+            else if ((tongTrang - Math.floor(r / 2)) < p) {
+                max = tongTrang;
+                min = tongTrang - r;
+            } else {
+                min = p - Math.floor(r / 2);
+                max = parseInt(p) + Math.floor(r / 2);
+            }
+
+            kq(null, res, min <= 0 ? 1 : min, max + 1);
+
+        });
+    });
+}
+
+
+sach.hienThiTrangTheLoai = (r, n, p,tt, kq) => {
+    sql.query(`SELECT COUNT(*) as count FROM sach where the_loai = ? `,tt, (err, res) => {
+        if (err) {
+            console.log("Lỗi lấy số sách", err);
+            return;
+        }
+        const tong = res[0].count;
+        const tongTrang = Math.ceil(res[0].count / n);
+        if (p > tongTrang) {
+            p = tongTrang;
+        } else if (p < 0) {
+            p = 1;
+        }
+        var s = (p - 1) * n;
+
+
+        sql.query(`SELECT * FROM sach where the_loai = ? LIMIT ${s},${n}`,tt, (err, res) => {
+            if (err) {
+                console.log("Lỗi lấy trang sách", err);
+                kq(err, null);
+                return;
+            }
+            var min = 0;
+            var max = 0;
+            
+            if (parseInt(p) < Math.floor(r / 2)) {
+              
+                min = 1;        
+                if((parseInt(p)*n)/(tong) < 1){
+                    max = r;
+                }else{
+                    max = parseInt(p);
+                }  
             }
             else if ((tongTrang - Math.floor(r / 2)) < p) {
                 max = tongTrang;
@@ -172,12 +242,11 @@ sach.hienThiTrang = (r, n, p, kq) => {
                 max = parseInt(p) + Math.floor(r / 2);
             }
 
-            kq(null, res, min === 0 ? 1 : min, max + 1);
+            kq(null, res, min <= 0 ? 1 : min, max + 1);
 
         });
     });
 }
-
 
 
 

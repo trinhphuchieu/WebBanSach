@@ -15,8 +15,8 @@ const dangNhap = function (dangNhap) {
 
 
 dangNhap.themTaiKhoan = (taiKhoan,kq) =>{
-
-    sql.query("INSERT INTO khach_hang SET ?", taiKhoan, (err, res) => {
+    console.log('sql tài khoản');
+    sql.query("INSERT INTO khach_hang SET ? ",taiKhoan, (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);

@@ -21,8 +21,6 @@ const upload = multer({ storage: storage })
 const router = express.Router();
 
 
-
-
 // DANG NHAP
 router.use(adminController.adminMiddleware);
 router.get('/dangxuat', adminController.dangXuat);
@@ -61,6 +59,7 @@ router.get('/nxb', adminController.quanLyNXB);
 
 
 //DON HANG
+
 router.get('/donhang/', adminController.xemDonHang);
 router.get('/donhang/:id', adminController.xemChiTietDon);
 router.post('/donhang/:id', adminController.duyetDon);

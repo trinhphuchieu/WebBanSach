@@ -1,70 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
-{{>TrangChu/PhanHead}}
+<html lang="vi">
+
+{{> TrangChu/PhanHeadKH}}
 
 <body>
-    <!-- Navigation-->
-    {{>TrangChu/PhanTop}}
-    <!-- Header-->
-    {{>TrangChu/PhanDau}}
-    <!-- Section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {{#each sach}}
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="/uploads/{{this.hinh_anh}}" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{this.ten_sach}}</h5>
-                                <!-- Product price-->
-                                {{this.gia_ban}} VNĐ
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-success mt-auto"
-                                    onClick='themSP({{json this}})'>Mua Sách</a></div>
+    
+    <!-- header -->
+    {{> TrangChu/PhanDau}}
+    <!-- form dang ky khi click vao button tren header-->
+    <link rel="stylesheet" href="/css/alert.css">
+
+
+   
+  
+
+    <!-- thanh tieu de "danh muc sach" + hotline + ho tro truc tuyen -->
+    <section class="duoinavbar">
+        <div class="container text-white">
+            <div class="row justify">
+                <div class="col-md-3">
+                    <div class="categoryheader">
+                        <div class="noidungheader text-white">
+                            <i class="fa fa-bars"></i>
+                            <span class="text-uppercase font-weight-bold ml-1">Danh mục sách</span>
                         </div>
                     </div>
                 </div>
-                {{/each}}
+                
             </div>
         </div>
-
-       
     </section>
-   
+     
+    <!-- noi dung danh muc sach(categories) + banner slider -->
+    <section class="header bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="margin-right: -15px;">
+                    <!-- CATEGORIES -->
+                    <div class="categorycontent">
+                        <ul>
+                            {{#each theloai}}
+                            <li> <i class="fa-solid fa-bookmark" style="color:cornflowerblue; margin-left: 20px;"></i><a
+                                    href="/theloai?tl={{this.ma_the_loai}}"> {{this.ten_the_loai}}</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <!-- banner slider  -->
+                <div class="col-md-9 px-0">
+                    <div id="carouselId" class="carousel slide" data-ride="carousel">
+                        <ol class="nutcarousel carousel-indicators rounded-circle">
+                            <li data-target="#carouselId" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselId" data-slide-to="1"></li>
+                            <li data-target="#carouselId" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href="#"><img src="/uploads/banner1.png" class="img-fluid"
+                                        style="height: 386px;" width="900px" alt="First slide"></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="#"><img src="/uploads/banner2.png" class="img-fluid"
+                                        style="height: 386px;" width="900px" alt="Second slide"></a>
+                            </div>
+                             <div class="carousel-item">
+                                <a href="#"><img src="/uploads/banner3.png" class="img-fluid"
+                                        style="height: 386px;" width="900px" alt="Second slide"></a>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselId" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselId" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- khoi sach moi  -->
+    <!-- khoi sach moi  -->
+    <section class="_1khoi sachmoi bg-white">
+        <div class="container">
+            <div class="noidung" style=" width: 100%;">
+                <div class="row">
+                    <!--header-->
+                    <div class="col-12 d-flex justify-content-between align-items-center pb-2 bg-transparent pt-4">
+                        <h1 class="header text-uppercase" style="font-weight: 400;">SÁCH MỚI TUYỂN CHỌN</h1>
+                        <a href="/sach" class="btn btn-warning btn-sm text-white">Xem tất cả</a>
+                    </div>
+                </div>
+                <div class="khoisanpham" style="padding-bottom: 2rem;">
+                    <!-- 1 san pham -->
+                    {{#each sach}}
+                    <div class="card">
+                        <a href="/{{this.ma_sach}}" class="motsanpham" style="text-decoration: none; color: black;"
+                            data-toggle="tooltip" data-placement="bottom" title="{{this.ten_sach}}">
+
+                            <img class="card-img-top anh" src="/uploads/{{this.hinh_anh}}"
+                                title="{{this.ten_sach}}">
+                            <div class="card-body noidungsp mt-3">
+                                <h3 class="card-title ten" style="text-align: center;">{{this.ten_sach}}</h3>
+                                <div class="danhgia" style="margin: auto; width: 65%;">
+                                    <ul class="d-flex" style="list-style: none;">
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><span class="text-muted">0 nhận xét</span></li>
+                                    </ul>
+                                </div>
+                                <div class="gia d-flex align-items-baseline">
+                                    <div class="giamoi" style="margin-left: 50px; font-size: 20px;">{{{number_format
+                                        gia_ban}}} ₫</div>
+                                </div>
+                                </a>
+                                <div class="danhgia">
+                                    <button type="button" class="btn btn-warning clickAlert"
+                                        style="margin: 10px 0; margin-left: 30px;"  onClick='themSP({{json this}})'>Thêm
+                                        Vào Giỏ</button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    {{/each}}
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+     {{!-- THÔNG BÁO --}}
+            <div class="alert hide">
+                <span class="fas fa-exclamation-circle"></span>
+                <span class="msg">Thêm vào giỏ thành công</span>
+                <div class="close-btn">
+                    <span class="fas fa-times"></span>
+                </div>
+            </div>
+    <!-- footer  -->
+    {{> TrangChu/PhanCuoi}}
+    <script>
         
-        {{!-- phân trang --}}
-     <nav aria-label="Page navigation example">
-            <ul class="pagination">
-            
-                <script>
-                    const min = {{min}} ;
-                    const max = {{max}};
-                    console.log('min ',min);
-                    console.log('max ',max);                    
-                    var a = document.getElementsByClassName("pagination");
-                    a[0].innerHTML = `<li class="page-item"><a class="page-link" href="#">Trang Trước</a></li>`;
-                    for(var i = min ; i < max;i++){
-                       
-                        a[0].innerHTML += `<li class="page-item"><a class="page-link" href="/sach?p=${i}">${i}</a></li>`;
-                    }
-                    a[0].innerHTML += `<li class="page-item"><a class="page-link" href="#">Trang Sau</a></li>`;   
-                </script>
-            </ul>
-        </nav>
-        {{!-- phân trang --}}
-
-    <!-- Footer-->
-    {{>TrangChu/PhanCuoi }}
-
+    $('.clickAlert').click(function () {
+                
+        $('.alert').addClass("show");
+        $('.alert').removeClass("hide");
+        $('.alert').addClass("showAlert");
+        setTimeout(function () {
+            $('.alert').removeClass("show");
+            $('.alert').addClass("hide");
+        }, 1000);
+    });
+    $('.close-btn').click(function () {
+        $('.alert').removeClass("show");
+        $('.alert').addClass("hide");
+    });
+    </script>
 </body>
 
 </html>

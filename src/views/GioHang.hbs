@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-{{>TrangChu/PhanHead}}
+<html lang="vi">
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-    table {
+{{> TrangChu/PhanHeadKH}}
+
+<body>
+   
+
+
+   <style>
+
+       <style> table {
         counter-reset: rowNumber;
     }
 
@@ -12,50 +17,70 @@
         counter-increment: rowNumber;
     }
 
-    table tbody tr td:first-child::before {
+    table tbody tr th:first-child::before {
         content: counter(rowNumber);
         min-width: 1em;
         margin-right: 0.5em;
-    }
-</style>
+    }</style>
 
-<body>
-    <!-- Navigation-->
-    {{>TrangChu/PhanTop}}
-    <!-- Header-->
-    {{>TrangChu/PhanDau}}
-    <!-- Section-->
-    <section class="py-5">
-
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h2>Giỏ Hàng</h2>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <th>STT</th>
-                        <th>Tên Sách</th>
-                        <th>Đơn Giá</th>
-                        <th>Số Lượng</th>
-                        <th>Thành Tiền</th>
-                    </thead>
-                    <tbody class="cart">
-                    </tbody>
-                    <tfoot>
-                        <td></td>
-                        <td class="text-right">Thành Tiền: <button onClick="window.location.href = '/giohang/muahang'">Đặt Hàng</button><strong class="total"></strong></td>
-                        <td></td>
-                    </tfoot>
-                </table>
+   {{> TrangChu/PhanDau}}
+   <link rel="stylesheet" type="text/css" href="/css/bat-len.css">
+       {{> TrangChu/MenuBar}}
+    <!-- nội dung của trang  -->
+    <section class="account-page my-3">
+        <div class="container">
+            <div class="page-content bg-white">
+                <div class="account-page-tab-content m-4">
+                    <!-- 2 tab: thông tin tài khoản, danh sách đơn hàng  -->
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <a class="nav-item nav-link " id="nav-donhang-tab" data-toggle="tab" href="#nav-donhang" role="tab" aria-controls="nav-profile" aria-selected="false">Giỏ Hàng Của Bạn</a>
+                        </div>
+                    </nav>
+                    
+                    <!-- nội dung 2 tab -->
+                    <div class="tab-content">
+                        
+                        <!-- nội dung tab 2: danh sách đơn hàng -->
+                        <div class="tab-pane  fade show active py-3" id="nav-donhang" role="tabpanel" aria-labelledby="nav-donhang-tab">
+                            <div class="donhang-table" id="hieudeptrai">
+                            <table class="table" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Hình Ảnh</th>
+                                        <th scope="col">Tên Sản Phẩm</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Giá Tiền</th>
+                                        <th scope="col">Thành Tiền</th>
+                                        <th scope="col">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="cart1">
+                                    
+                                    
+                                </tbody>
+                                 <tr style="border: 2px solid gray;">
+                                        
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td scope="row" style="font-weight: bold; color: red; font-size: 20px;">Thành Tiền:</td>
+                                        <th><strong style="font-size: 20px;" class="total"></strong></th>
+                                        <td><a href="/giohang/muahang"><button type="button" class="btn btn-warning" onClick="cartLS.list().length===0"  >Mua Hàng Ngay</button></a></td>
+                                 </tr>
+                            </table>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </section>
-
-    <!-- Footer-->
-    {{>TrangChu/PhanCuoi }}
-
+    
+    <!-- footer  -->
+    {{> TrangChu/PhanCuoi}}
 </body>
-
 </html>

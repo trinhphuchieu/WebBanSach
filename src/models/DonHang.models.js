@@ -57,6 +57,32 @@ donHang.xemDonHang = (kq) => {
     });
 }
 
+
+donHang.xoaDonHang = (ma_don,kq) => {
+
+    sql.query("DELETE FROM don_dat_hang WHERE ma_don_hang = ?",ma_don,(err, res) => {
+        if (err) {
+            console.log("Lỗi xóa: ", err);
+            kq(err, null);
+            return;
+        }
+        console.log("Xóa đơn thành công: ", { ...res });
+        kq(null, { ...res });
+    });
+}
+donHang.xemDonKhachHang = (tai_khoan,kq) => {
+
+    sql.query("SELECT * FROM don_dat_hang WHERE tai_khoan = ? ORDER BY trang_thai_don ASC",tai_khoan, (err, res) => {
+        if (err) {
+            console.log("Lỗi: ", err);
+            kq(err, null);
+            return;
+        }
+        console.log("Thông tin Đơn Hàng: ", { ...res });
+        kq(null, { ...res });
+    });
+}
+
 donHang.xemDonDangGiao = (kq) => {
 
     sql.query("SELECT * FROM don_dat_hang WHERE trang_thai_don = 1", (err, res) => {
@@ -118,6 +144,21 @@ donHang.duyetDon = (ma_don_hang ,kq) => {
 donHang.xemDonChiTiet = (ma_don_hang, kq) => {
 
     sql.query("SELECT * FROM chi_tiet_don where ma_don_hang = ?", ma_don_hang, (err, res) => {
+        if (err) {
+            console.log("Lỗi: ", err);
+            kq(err, null);
+            return;
+        }
+        console.log("Thông tin chi tiết đơn hàng: ", { ...res });
+        kq(null, { ...res });
+        return res;
+    });
+}
+
+
+donHang.xemDonChiTietKhachHang = (ma_don_hang,tai_khoan, kq) => {
+
+    sql.query("SELECT * FROM chi_tiet_don  INNER JOIN don_dat_hang WHERE chi_tiet_don.ma_don_hang = don_dat_hang.ma_don_hang and don_dat_hang.tai_khoan = ? and don_dat_hang.ma_don_hang = ?", [tai_khoan,ma_don_hang], (err, res) => {
         if (err) {
             console.log("Lỗi: ", err);
             kq(err, null);

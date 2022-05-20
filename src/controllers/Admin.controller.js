@@ -260,6 +260,13 @@ class AdminController {
             return res.render('CapNhatNXB',{the_loai:kq});
         })
     }
+
+    kiemTraHoatDong(req, res){
+        if(req.session.admin !== null && req.params.id ===1){
+            return res.status(200).send({code:200});
+        }
+        console.log('hieu');
+    }
     
 
     themNXB(req, res){

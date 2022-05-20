@@ -1,0 +1,24 @@
+<section class="duoinavbar">
+    <div class="container text-white">
+        <div class="row justify">
+            <div class="col-lg-3 col-md-5">
+                <div class="categoryheader">
+                    <div class="noidungheader text-white">
+                        <i class="fa fa-bars"></i>
+                        <span class="text-uppercase font-weight-bold ml-1">Danh mục sách</span>
+                    </div>
+                    <!-- CATEGORIES -->
+                    <div class="categorycontent">
+                        <ul>
+                            {{#each theloai}}
+                            <li> <i class="fa-solid fa-bookmark" style="color:cornflowerblue; margin-left: 20px;"></i><a
+                                    href="/theloai?tl={{this.ma_the_loai}}"> {{this.ten_the_loai}}</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

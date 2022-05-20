@@ -32,7 +32,7 @@ function renderHoaDon(chiTiet, donHang) {
         <div class="row mb-4">
             
             <div class="col">
-                <strong style="color:red;text-align:center;">HÓA ĐƠN ĐIỆN TỬ</strong>
+                <strong style="color: red; margin-left: 300px;">HÓA ĐƠN ĐIỆN TỬ</strong>
                 <br>
                 <strong>Mã Đơn Hàng: </strong><span id="ma-don"></span>
                 <br>
@@ -65,20 +65,18 @@ function renderHoaDon(chiTiet, donHang) {
                 </tbody>
             
                 <tfoot>
-                    <tr>
-                        <td style="text-align:center;">
-                            <strong>Tổng Biên Lai</strong>
-                        </td>
-                      
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
-                        <th id="tong-tien" class="right">  
-                        </th>
-                    </tr>
+                    
                 </tfoot>
                 
+            </table>
+            <table>
+                <tr>
+                    <td style="text-align:left; width:600px;">
+                    <strong>Tổng Biên Lai</strong>
+                    </td>
+                    <th id="tong-tien" class="right">  
+                        </th>
+                </tr>
             </table>
             <div  id="btnDuyet" class="align-items-center"></div>
         </div>
@@ -99,9 +97,9 @@ function renderHoaDon(chiTiet, donHang) {
     dc.innerHTML = donHang.dia_chi;
 
     if(donHang.trang_thai_don === 0){
-        btnDuyet.innerHTML = `<button class="btn btn-primary" onClick ="duyetDon()"> Xử Lý Đơn</button>`;
+        btnDuyet.innerHTML = `<button class="btn btn-primary" style="margin-left: 320px;" onClick ="duyetDon()"> Xử Lý Đơn</button>`;
     }else if(donHang.trang_thai_don === 1){
-        btnDuyet.innerHTML = `<button class="btn btn-primary" onClick ="duyetDon()"> Đã Xử Lý</button>`;
+        btnDuyet.innerHTML = `<button class="btn btn-primary" style="margin-left: 320px;" onClick ="duyetDon()"> Đã Xử Lý</button>`;
     }
     trang_thai.innerHTML = donHang.trang_thai_don === 0 ? 'Chưa Duyệt' : (donHang.trang_thai_don === 1 ? 'Đang Xử Lý' : 'Đã Giao');
     var s = document.getElementsByClassName('tt-donHang');
@@ -141,6 +139,8 @@ function duyetDon(duyetDon) {
             alert('error');
         }
     });
+
+
 }
 
 
